@@ -3,21 +3,33 @@ package controllers
 import play.api.Play
 import play.api.mvc._
 
+import scala.io.Source
+import play.api.libs.json._
+
 class Application extends Controller {
 
   def index = Action {
-    Ok(views.html.index("Your new application is ready."))
+    Ok(views.html.index(1))
   }
 
   def home = Action {
     val projectRoot = Play.current.path
-    // val absolutePath = Play.current().path().getAbsolutePath()
-    // val filename = "fileopen.scala"
+    val addingPath = Seq(projectRoot, "/conf/json/result.json")
+    val finalPath = addingPath.mkString
+    val file = Source.fromFile(finalPath)
+    val mainFile = file.mkString
+    val json: JsValue = Json.parse(mainFile)
+    var n:Int = 1;
+    var finalTotal = 0
 
-/*    val fpu = new FileProcessorUtility("test.txt")
-    fpu.readFile
+    while (n != 5) {
+      val dataArr = (json \ "menu" \ "subject" \ "physics")(n - 1).get
+      val marks = (dataArr \ "marks").get
+      finalTotal = finalTotal + marks.toString().toInt
+      println(marks)
+      n += 1
+    }
 
-    File fileo = new File(projectRoot.asText()); */
-    Ok(views.html.index("ok"))
+    Ok(views.html.index(finalTotal))
   }
 }
