@@ -1,5 +1,6 @@
 package controllers
 
+import play.api.Play
 import play.api.mvc._
 
 class Application extends Controller {
@@ -9,7 +10,14 @@ class Application extends Controller {
   }
 
   def home = Action {
-    Ok(views.html.index("This is my new home!"))
-  }
+    val projectRoot = Play.current.path
+    // val absolutePath = Play.current().path().getAbsolutePath()
+    // val filename = "fileopen.scala"
 
+/*    val fpu = new FileProcessorUtility("test.txt")
+    fpu.readFile
+
+    File fileo = new File(projectRoot.asText()); */
+    Ok(views.html.index("ok"))
+  }
 }
