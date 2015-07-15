@@ -11,6 +11,7 @@ import play.api.libs.json._
 class BasicOperations extends Controller {
 
 
+
   def home = Action {
     val projectRoot = Play.current.path
     val addingPath = Seq(projectRoot, "/conf/json/result.json")
@@ -30,5 +31,14 @@ class BasicOperations extends Controller {
     }
 
     Ok(views.html.index(finalTotal))
+  }
+
+  def factorial = Action {
+    val output = factorialSub(30)
+    Ok(output.toString())
+  }
+
+  def factorialSub(x: BigInt): BigInt = {
+    if (x == 0) 1 else x * factorialSub(x - 1)
   }
 }
